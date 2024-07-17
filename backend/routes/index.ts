@@ -12,6 +12,7 @@ router.get('/', function(req: Request, res: Response) {
 function formatData(data:any){
     const IMAGE_URL = `https://image.tmdb.org/t/p/w300`;
     return {
+        id: data.id,
         title: data.title,
         vote: parseFloat(data.vote_average.toFixed(1)),
         image: IMAGE_URL + data.poster_path

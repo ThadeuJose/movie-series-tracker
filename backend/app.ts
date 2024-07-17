@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 
 import indexRouter from "./routes/index";
+import userRouter from "./routes/user";
 
 const app:Express = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
