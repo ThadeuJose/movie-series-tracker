@@ -20,7 +20,7 @@ describe('Home', () => {
 
     cy.wait(['@getData', '@getImage']);
 
-    const identifier = '[data-cy="IconPlanToWatch-1"]';
+    const identifier: string = '[data-cy="IconPlanToWatch-1"]';
 
     cy.get(identifier).click();
 
