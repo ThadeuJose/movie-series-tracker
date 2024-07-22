@@ -55,6 +55,7 @@ function App() {
               }}
             >
               <IconPlanToWatch
+                dataCy={`IconPlanToWatch-${item.id}`}
                 isInList={dataPlan.indexOf(item.id) !== -1}
                 onClick={() => updatePlan(item.id, item.title)}
               />
