@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IconPlanToWatch } from './icon-plan-to-watch';
-import axios from 'axios';
-
-const baseURL = 'http://localhost:3000';
+import { HttpClient } from './api-client';
 
 interface Movie {
   id: number;
@@ -14,29 +12,27 @@ interface Movie {
 function App() {
   const [data, setData] = useState<Movie[]>([]);
   const [dataPlan, setDataPlan] = useState<number[]>([]);
+  const api: HttpClient = new HttpClient();
 
   useEffect(() => {
-    axios
-      .get(baseURL)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    api.get<Movie[]>('').then((response) => {
+      setData(response);
+    });
   }, []);
 
   function updatePlan(id: number, title: string) {
-    axios
-      .post(baseURL + '/user/planning', {
+    type payloadType = {
+      id: number;
+      title: string;
+    };
+
+    api
+      .post<number[], payloadType>('/user/planning', {
         id,
         title,
       })
       .then(function (response) {
-        setDataPlan(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
+        setDataPlan(response);
       });
   }
 
