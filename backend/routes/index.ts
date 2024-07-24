@@ -1,11 +1,16 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { ExpressRouteFunc, MovieApiClient } from '../types';
 import { getMovieApiClient } from '../service-injection';
 
-export function indexRoute(
+function createIndexHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
 ): ExpressRouteFunc {
   return async function (req: Request, res: Response) {
-    apiClient.getAllMovies().then((response) => res.send(response));
+    const { page } = req.params;
+    apiClient.getAllMovies(Number(page)).then((response) => res.send(response));
   };
 }
+
+export const indexRouter: Router = Router();
+
+indexRouter.get('/:page', createIndexHandler());

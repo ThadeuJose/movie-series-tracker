@@ -10,7 +10,7 @@ const fakeMovieApiClient: MovieApiClient = {
           image: 'https://image.tmdb.org/t/p/w300/imagepath.jpeg',
         },
       ],
-      total_pages: 1,
+      total_pages: 2,
     }),
   ),
 };
@@ -23,15 +23,12 @@ jest.mock('../service-injection', () => ({
   getMovieApiClient: () => fakeMovieApiClient,
 }));
 
-describe('Index', () => {
-  test('should return all items', async () => {
-    const response = await request(app).get('/1');
+describe('Pagination', () => {
+  test('should return correct page', async () => {
+    const response = await request(app).get('/2');
 
     expect(response.status).toEqual(200);
 
-    expect(response.body.results[0].title).toEqual('Movie 1');
-    expect(response.body.results[0].image).toEqual(
-      'https://image.tmdb.org/t/p/w300/imagepath.jpeg',
-    );
+    expect(fakeMovieApiClient.getAllMovies).toHaveBeenCalledWith(2);
   });
 });

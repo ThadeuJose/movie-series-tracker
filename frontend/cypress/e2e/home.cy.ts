@@ -1,6 +1,6 @@
 describe('Home', () => {
   it('Should mark as plan to watch', () => {
-    cy.intercept('http://localhost:3000', { fixture: 'movies.json' }).as(
+    cy.intercept('http://localhost:3000/1', { fixture: 'movies.json' }).as(
       'getData',
     );
 

@@ -3,7 +3,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import { indexRoute } from './routes/index';
+import { indexRouter } from './routes/index';
 import userRouter from './routes/user';
 
 export const app: Express = express();
@@ -14,5 +14,5 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRoute());
+app.use('/', indexRouter);
 app.use('/user', userRouter);

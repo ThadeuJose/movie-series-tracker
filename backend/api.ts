@@ -1,5 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { HttpClient, Movie, MovieApiClient } from './types';
+import {
+  HttpClient,
+  Movie,
+  MovieApiClient,
+  MoviePayload,
+  TheMovieDBPayload,
+  TheMovieDBResult,
+} from './types';
 
 export class TheMovieDBApiClient implements MovieApiClient {
   private api: AxiosHTTPClient;
@@ -8,17 +15,25 @@ export class TheMovieDBApiClient implements MovieApiClient {
     this.api = new AxiosHTTPClient();
   }
 
-  getAllMovies(): Promise<Movie[]> {
-    return new Promise<Movie[]>((resolve, reject) => {
+  getAllMovies(page: number): Promise<MoviePayload> {
+    return new Promise<MoviePayload>((resolve, reject) => {
       this.api
-        .get<any>()
-        .then((response) => resolve(response.results.map(formatData)))
+        .get<TheMovieDBPayload>(page)
+        .then((response) => resolve(formatData(response)))
         .catch((data) => reject(data));
     });
   }
 }
 
-function formatData(data: any): Movie {
+function formatData(data: TheMovieDBPayload): MoviePayload {
+  return {
+    page: data.page,
+    results: data.results.map(formatMovie),
+    total_pages: data.total_pages,
+  };
+}
+
+function formatMovie(data: TheMovieDBResult): Movie {
   const IMAGE_URL = `https://image.tmdb.org/t/p/w300`;
   return {
     id: data.id,
@@ -39,10 +54,10 @@ class AxiosHTTPClient implements HttpClient {
     });
   }
 
-  get<T>(): Promise<T> {
+  get<T>(page: number): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       this.api
-        .get(`https://api.themoviedb.org/3/discover/movie?page=1`)
+        .get(`https://api.themoviedb.org/3/discover/movie?page=${page}`)
         .then((response: AxiosResponse) => {
           resolve(response.data as T);
         })
