@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IconPlanToWatch } from './icon-plan-to-watch';
 import { HttpClient } from './api-client';
+import { IconStar } from './icon-star';
 
 type Result = {
   page: number;
@@ -67,11 +68,19 @@ function App() {
                 backgroundRepeat: 'no-repeat',
               }}
             >
-              <IconPlanToWatch
-                dataCy={`IconPlanToWatch-${item.id}`}
-                isInList={dataPlan.indexOf(item.id) !== -1}
-                onClick={() => updatePlan(item.id, item.title)}
-              />
+              <div className="flex mt-2 mx-2">
+                <div className="flex relative">
+                  <IconStar />
+                  <div className="bg-black text-white text-xl my-auto px-2 pb-1 left-8 absolute top-1/2 -translate-y-1/2 rounded-r-xl">
+                    {item.vote}
+                  </div>
+                </div>
+                <IconPlanToWatch
+                  dataCy={`IconPlanToWatch-${item.id}`}
+                  isInList={dataPlan.indexOf(item.id) !== -1}
+                  onClick={() => updatePlan(item.id, item.title)}
+                />
+              </div>
             </div>
           </div>
         ))}
