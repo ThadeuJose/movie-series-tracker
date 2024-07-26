@@ -1,8 +1,10 @@
-[
-    {
+{
+    "page": 1,
+    "results": [{
         "id": 1,
         "title":"Movie 1",
         "vote": 1,
         "image": "placehold/poster.png"
-    }
-]
+    }],
+    "total_pages": 1
+}

@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { IconPlanToWatch } from './icon-plan-to-watch';
 import { HttpClient } from './api-client';
 
+type Result = {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+};
+
 interface Movie {
   id: number;
   title: string;
@@ -10,12 +16,17 @@ interface Movie {
 }
 
 function App() {
-  const [data, setData] = useState<Movie[]>([]);
+  const emptyData = {
+    page: 0,
+    results: [],
+    total_pages: 0,
+  };
+  const [data, setData] = useState<Result>(emptyData);
   const [dataPlan, setDataPlan] = useState<number[]>([]);
   const api: HttpClient = new HttpClient();
 
   useEffect(() => {
-    api.get<Movie[]>('').then((response) => {
+    api.get<Result>('1').then((response) => {
       setData(response);
     });
   }, []);
@@ -36,18 +47,24 @@ function App() {
       });
   }
 
-  if (data.length === 0) return 'Cant Render';
+  const paginationIconsClass: string = 'cursor-pointer px-4 py-2';
+
+  if (data.page === 0) return 'Cant Render';
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline ">Hello world!</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <div className="max-h-full max-w-full min-w-0 min-h-0 grid grid-cols-4 gap-4 m-4">
-        {data.map((item: Movie) => (
+        {data.results.map((item: Movie) => (
           <div key={item.id} className="h-full w-fit flex">
             <div
+              data-cy={`Poster-${item.id}`}
               className="w-[300px] h-[450px]"
               style={{
                 backgroundImage: `url(${item.image})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
               }}
             >
               <IconPlanToWatch
@@ -58,6 +75,33 @@ function App() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="m-auto flex flex-row justify-center items-center my-6 border border-black rounded-lg w-fit">
+        <span
+          data-cy={`IconPreviousPage`}
+          className={paginationIconsClass + ' border-r border-black'}
+          onClick={() => {
+            api.get<Result>(String(data.page - 1)).then((response) => {
+              setData(response);
+            });
+          }}
+        >
+          Previous
+        </span>
+        <span data-cy="PageNumber" className="px-3">
+          {data.page}
+        </span>
+        <span
+          data-cy={`IconNextPage`}
+          className={paginationIconsClass + ' border-l border-black'}
+          onClick={() => {
+            api.get<Result>(String(data.page + 1)).then((response) => {
+              setData(response);
+            });
+          }}
+        >
+          Next
+        </span>
       </div>
     </>
   );
