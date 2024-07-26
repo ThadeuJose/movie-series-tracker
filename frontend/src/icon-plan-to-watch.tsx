@@ -12,13 +12,11 @@ export function IconPlanToWatch({
   isInList,
   onClick,
 }: IconPlanToWatchProps) {
-  const activeClass = isInList
-    ? 'text-emerald-500'
-    : 'text-emerald-500 opacity-0 hover:opacity-85';
+  const activeClass = isInList ? 'opacity-85' : 'opacity-0 hover:opacity-85';
   return (
     <BookmarkIcon
       data-cy={dataCy}
-      className={`ml-auto size-10 ${activeClass}`}
+      className={`ml-auto size-10 text-emerald-500 ${activeClass}`}
       onClick={onClick}
     />
   );

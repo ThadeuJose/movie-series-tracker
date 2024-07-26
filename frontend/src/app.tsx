@@ -60,7 +60,7 @@ function App() {
           <div key={item.id} className="h-full w-fit flex">
             <div
               data-cy={`Poster-${item.id}`}
-              className="w-[300px] h-[450px]"
+              className="relative w-[300px] h-[450px]"
               style={{
                 backgroundImage: `url(${item.image})`,
                 backgroundSize: 'contain',
@@ -68,6 +68,11 @@ function App() {
                 backgroundRepeat: 'no-repeat',
               }}
             >
+              <div className="absolute inset-0 bg-black opacity-70 z-0 flex items-center justify-center">
+                <div className="text-white text-3xl text-center px-4 py-2">
+                  {item.title}
+                </div>
+              </div>
               <div className="flex mt-2 mx-2">
                 <div className="flex relative">
                   <IconStar />
