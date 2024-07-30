@@ -8,7 +8,7 @@ describe('Home', () => {
       'getImage',
     );
 
-    cy.visit('/');
+    cy.visit('/movies');
 
     cy.wait(['@getData', '@getImage']);
 

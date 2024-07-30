@@ -38,7 +38,7 @@ describe('Home', () => {
       [1],
     ).as('postData');
 
-    cy.visit('/');
+    cy.visit('/movies');
 
     cy.wait(['@getDataFirst', '@getImage']);
 
@@ -88,7 +88,7 @@ describe('Home', () => {
       [1],
     ).as('postData');
 
-    cy.visit('/');
+    cy.visit('/movies');
 
     cy.wait(['@getDataFirst', '@getImage']);
 

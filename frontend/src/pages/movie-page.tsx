@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { IconPlanToWatch } from './icon-plan-to-watch';
-import { HttpClient } from './api-client';
-import { IconStar } from './icon-star';
-import { IconWatched } from './icon-watched';
+import { IconPlanToWatch } from './../icon-plan-to-watch';
+import { HttpClient } from './../api-client';
+import { IconStar } from './../icon-star';
+import { IconWatched } from './../icon-watched';
+import { Link } from 'react-router-dom';
 
 type Result = {
   page: number;
@@ -17,7 +18,7 @@ interface Movie {
   image: string;
 }
 
-function App() {
+export function MoviesPage() {
   const emptyData = {
     page: 0,
     results: [],
@@ -85,8 +86,7 @@ function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <div className="max-h-full max-w-full min-w-0 min-h-0 grid grid-cols-4 gap-4 m-4">
+      <div className="max-h-full max-w-full min-w-0 min-h-0 grid grid-cols-4 justify-items-center gap-y-8 m-4">
         {data.results.map((item: Movie) => (
           <div key={item.id} className="h-full w-fit flex">
             <div
@@ -99,11 +99,13 @@ function App() {
                 backgroundRepeat: 'no-repeat',
               }}
             >
-              <div className="absolute inset-0 bg-black opacity-70 z-0 flex items-center justify-center">
-                <div className="text-white text-3xl text-center px-4 py-2">
-                  {item.title}
+              <Link to={`${item.id}/detail`}>
+                <div className="absolute inset-0 bg-black opacity-70 z-0 flex items-center justify-center">
+                  <div className="text-white text-3xl text-center px-4 py-2">
+                    {item.title}
+                  </div>
                 </div>
-              </div>
+              </Link>
               <div className="flex mt-2 mx-2">
                 <div>
                   <div className="flex relative">
@@ -162,5 +164,3 @@ function App() {
     </>
   );
 }
-
-export default App;

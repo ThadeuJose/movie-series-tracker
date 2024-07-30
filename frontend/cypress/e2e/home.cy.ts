@@ -16,7 +16,7 @@ describe('Home', () => {
       [1],
     ).as('postData');
 
-    cy.visit('/');
+    cy.visit('/movies');
 
     cy.wait(['@getData', '@getImage']);
 
