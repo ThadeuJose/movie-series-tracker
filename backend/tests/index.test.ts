@@ -13,6 +13,7 @@ const fakeMovieApiClient: MovieApiClient = {
       total_pages: 1,
     }),
   ),
+  getMovieDetail: jest.fn(),
 };
 
 import request from 'supertest';

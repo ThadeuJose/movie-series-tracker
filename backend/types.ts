@@ -13,8 +13,27 @@ export type Movie = {
   image: string;
 };
 
+export type MovieDetail = {
+  id: number;
+  title: string;
+  synopsis: string;
+  image: string;
+  runtime: string;
+  vote: number;
+  release_date: string;
+  cast: Cast[];
+};
+
+export type Cast = {
+  id: number;
+  name: string;
+  image: string | undefined;
+  character: string;
+};
+
 export interface MovieApiClient {
   getAllMovies(page: number): Promise<MoviePayload>;
+  getMovieDetail(id: number): Promise<MovieDetail>;
 }
 
 export type ExpressRouteFunc = (
@@ -24,29 +43,5 @@ export type ExpressRouteFunc = (
 ) => void | Promise<void>;
 
 export interface HttpClient {
-  get<T>(page: number): Promise<T>;
-}
-
-export interface TheMovieDBPayload {
-  page: number;
-  results: TheMovieDBResult[];
-  total_pages: number;
-  total_results: number;
-}
-
-export interface TheMovieDBResult {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  get<T>(url: string): Promise<T>;
 }

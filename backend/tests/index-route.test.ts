@@ -1,9 +1,9 @@
-import { indexRoute } from '../routes';
+import { createIndexHandler } from '../routes';
 import { MovieApiClient } from '../types';
 import { Response } from 'express';
 
 const fakeMovieApiClient: MovieApiClient = {
-  getAllMovies: jest.fn(() =>
+  getAllMovies: jest.fn((page: number) =>
     Promise.resolve({
       page: 1,
       results: [
@@ -17,6 +17,7 @@ const fakeMovieApiClient: MovieApiClient = {
       total_pages: 1,
     }),
   ),
+  getMovieDetail: jest.fn(),
 };
 
 describe('indexRoute', () => {
@@ -30,7 +31,7 @@ describe('indexRoute', () => {
   };
   describe('when made a request', () => {
     beforeEach(() => {
-      const route = indexRoute(fakeMovieApiClient);
+      const route = createIndexHandler(fakeMovieApiClient);
       route(mockRequest, mockResponse);
     });
 
