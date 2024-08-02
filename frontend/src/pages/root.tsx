@@ -3,8 +3,8 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 export function Root() {
   return (
-    <div>
-      <nav className="flex m-4">
+    <div className="m-4">
+      <nav className="flex my-4">
         <NavLink to={`/`} className="text-3xl font-bold mr-auto">
           Media Tracker
         </NavLink>

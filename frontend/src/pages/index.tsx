@@ -3,8 +3,9 @@ import React from 'react';
 export function Index() {
   return (
     <>
-      <div className="">Top 10 Movies </div>
-      <div className="">Top 10 Tv Series </div>
+      <div className="">Airing Today</div>
+      <div className="">Top 10 Movies</div>
+      <div className="">Top 10 Tv Series</div>
     </>
   );
 }
