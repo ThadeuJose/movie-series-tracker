@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import { indexRouter } from './routes/index';
 import userRouter from './routes/user';
+import { tvRouter } from './routes/tv';
 
 export const app: Express = express();
 
@@ -14,5 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
+app.use('/tv', tvRouter);
 app.use('/user', userRouter);
+app.use('/', indexRouter);

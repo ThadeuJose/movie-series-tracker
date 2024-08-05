@@ -11,9 +11,11 @@ const fakeMovieApiClient: MovieApiClient = {
         },
       ],
       total_pages: 1,
+      total_results: 1,
     }),
   ),
   getMovieDetail: jest.fn(),
+  getAllTv: jest.fn(),
 };
 
 import request from 'supertest';

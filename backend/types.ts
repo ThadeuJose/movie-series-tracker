@@ -1,12 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 
-export type MoviePayload = {
+export interface Pagination<T> {
   page: number;
-  results: Movie[];
+  results: T[];
   total_pages: number;
-};
+  total_results: number;
+}
 
 export type Movie = {
+  id: number;
+  title: string;
+  vote: number;
+  image: string;
+};
+
+export type Tv = {
   id: number;
   title: string;
   vote: number;
@@ -27,12 +35,13 @@ export type MovieDetail = {
 export type Cast = {
   id: number;
   name: string;
-  image: string | undefined;
+  image: string | null;
   character: string;
 };
 
 export interface MovieApiClient {
-  getAllMovies(page: number): Promise<MoviePayload>;
+  getAllMovies(page: number): Promise<Pagination<Movie>>;
+  getAllTv(page: number): Promise<Pagination<Tv>>;
   getMovieDetail(id: number): Promise<MovieDetail>;
 }
 

@@ -1,18 +1,18 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import {
-  MovieDetail as MovieDetailResult,
-  Cast as CastResult,
+  MovieDetail,
   HttpClient,
   Movie,
   MovieApiClient,
-  MoviePayload,
+  Pagination,
+  Tv,
 } from './types';
 import {
-  MovieDetail,
-  Cast,
-  MovieDiscover,
+  MovieDetail as MovieDetailResult,
   MovieDiscoverResult,
+  TvDiscoverResult,
 } from './themoviedb-api-types';
+import { Formatter } from './formatter';
 
 export class TheMovieDBApiClient implements MovieApiClient {
   private api: AxiosHTTPClient;
@@ -21,87 +21,36 @@ export class TheMovieDBApiClient implements MovieApiClient {
     this.api = new AxiosHTTPClient();
   }
 
-  getAllMovies(page: number): Promise<MoviePayload> {
-    return new Promise<MoviePayload>((resolve, reject) => {
+  getAllMovies(page: number): Promise<Pagination<Movie>> {
+    return new Promise<Pagination<Movie>>((resolve, reject) => {
       this.api
-        .get<MovieDiscover>(`discover/movie?page=${page}`)
-        .then((response) => resolve(formatData(response)))
+        .get<Pagination<MovieDiscoverResult>>(`discover/movie?page=${page}`)
+        .then((response) =>
+          resolve(Formatter.formatResult(response, Formatter.formatMovie)),
+        )
         .catch((data) => reject(data));
     });
   }
 
-  getMovieDetail(id: number): Promise<MovieDetailResult> {
-    return new Promise<MovieDetailResult>((resolve, reject) => {
+  getAllTv(page: number): Promise<Pagination<Tv>> {
+    return new Promise<Pagination<Tv>>((resolve, reject) => {
       this.api
-        .get<MovieDetail>(`movie/${id}?append_to_response=credits`)
-        .then((response) => resolve(this.formatMovieDetail(response)))
+        .get<Pagination<TvDiscoverResult>>(`discover/tv?page=${page}`)
+        .then((response) =>
+          resolve(Formatter.formatResult(response, Formatter.formatTv)),
+        )
         .catch((data) => reject(data));
     });
   }
 
-  formatMovieDetail(data: MovieDetail): MovieDetailResult {
-    return {
-      id: data.id,
-      title: data.title,
-      synopsis: data.overview,
-      image: this.formatPoster(data.poster_path),
-      runtime: this.formatTime(data.runtime),
-      vote: this.formatVote(data.vote_average),
-      release_date: data.release_date,
-      cast: this.formatCast(data.credits.cast),
-    };
-  }
-
-  formatPoster(path: string): string {
-    return `https://image.tmdb.org/t/p/w300${path}`;
-  }
-
-  formatImage(path: string | undefined): string | undefined {
-    if (path) {
-      return `https://image.tmdb.org/t/p/w300${path}`;
-    }
-    return undefined;
-  }
-
-  formatVote(value: number) {
-    return parseFloat(value.toFixed(1));
-  }
-
-  formatTime(value: number) {
-    const hour: number = Math.floor(value / 60);
-    const minute: number = value % 60;
-    return `${hour}h ${minute}m`;
-  }
-
-  formatCast(cast: Cast[]): CastResult[] {
-    const arr = cast.slice(0, 10);
-    return arr.map((elem: Cast) => {
-      return {
-        id: elem.id,
-        name: elem.name,
-        image: this.formatImage(elem.profile_path),
-        character: elem.character,
-      };
+  getMovieDetail(id: number): Promise<MovieDetail> {
+    return new Promise<MovieDetail>((resolve, reject) => {
+      this.api
+        .get<MovieDetailResult>(`movie/${id}?append_to_response=credits`)
+        .then((response) => resolve(Formatter.formatMovieDetail(response)))
+        .catch((data) => reject(data));
     });
   }
-}
-
-function formatData(data: MovieDiscover): MoviePayload {
-  return {
-    page: data.page,
-    results: data.results.map(formatMovie),
-    total_pages: data.total_pages,
-  };
-}
-
-function formatMovie(data: MovieDiscoverResult): Movie {
-  const IMAGE_URL = `https://image.tmdb.org/t/p/w300`;
-  return {
-    id: data.id,
-    title: data.title,
-    vote: parseFloat(data.vote_average.toFixed(1)),
-    image: IMAGE_URL + data.poster_path,
-  };
 }
 
 class AxiosHTTPClient implements HttpClient {
