@@ -10,6 +10,18 @@ export function Root() {
         </NavLink>
 
         <NavLink
+          to={`Tv`}
+          className={({ isActive }) => {
+            if (isActive) {
+              return 'border-b-2 border-blue-500 m-2';
+            }
+            return 'm-2';
+          }}
+        >
+          TV
+        </NavLink>
+
+        <NavLink
           to={`movies`}
           className={({ isActive }) => {
             if (isActive) {

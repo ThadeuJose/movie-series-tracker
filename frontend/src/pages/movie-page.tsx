@@ -106,6 +106,7 @@ export function MoviesPage() {
                   </div>
                 </div>
               </Link>
+
               <div className="flex mt-2 mx-2">
                 <div>
                   <div className="flex relative">
