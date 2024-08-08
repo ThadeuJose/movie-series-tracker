@@ -16,6 +16,7 @@ const fakeMovieApiClient: MovieApiClient = {
   ),
   getMovieDetail: jest.fn(),
   getAllTv: jest.fn(),
+  getTvDetail: jest.fn(),
 };
 
 import request from 'supertest';

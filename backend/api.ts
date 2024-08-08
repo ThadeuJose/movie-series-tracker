@@ -6,10 +6,13 @@ import {
   MovieApiClient,
   Pagination,
   Tv,
+  TvDetail,
 } from './types';
 import {
   MovieDetail as MovieDetailResult,
   MovieDiscoverResult,
+  SeasonResult,
+  TvDetailResult,
   TvDiscoverResult,
 } from './themoviedb-api-types';
 import { Formatter } from './formatter';
@@ -41,6 +44,20 @@ export class TheMovieDBApiClient implements MovieApiClient {
         )
         .catch((data) => reject(data));
     });
+  }
+
+  async getTvDetail(id: number): Promise<TvDetail> {
+    const tvDetail = await this.api.get<TvDetailResult>(
+      `tv/${id}?append_to_response=credits`,
+    );
+    const season = await this.api.get<SeasonResult>(
+      `tv/${id}/season/${tvDetail.number_of_seasons}`,
+    );
+    return {
+      detail: Formatter.formatTvDetail(tvDetail),
+      season: Formatter.formatSeason(season),
+      cast: Formatter.formatCast(tvDetail.credits.cast),
+    };
   }
 
   getMovieDetail(id: number): Promise<MovieDetail> {

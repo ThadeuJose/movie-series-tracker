@@ -16,8 +16,7 @@ function createMovieDetailHandler(
 ): ExpressRouteFunc {
   return async function (req: Request, res: Response) {
     const { id } = req.params;
-    // apiClient.getMovieDetail(Number(id)).then((response) => res.send(response));
-    res.send('Ok');
+    apiClient.getTvDetail(Number(id)).then((response) => res.send(response));
   };
 }
 

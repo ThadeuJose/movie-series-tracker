@@ -7,14 +7,46 @@ export interface Pagination<T> {
   total_results: number;
 }
 
-export type Movie = {
+export type Tv = {
   id: number;
   title: string;
   vote: number;
   image: string;
 };
 
-export type Tv = {
+export type TvDetail = {
+  detail: Detail;
+  season: Season;
+  cast: Cast[];
+};
+
+export interface Detail {
+  id: number;
+  title: string;
+  vote: number;
+  image: string | null;
+  last_episode_to_air: Episode | null;
+  next_episode_to_air: Episode | null;
+  synopsis: string;
+}
+
+export interface Season {
+  id: number;
+  name: string;
+  vote: number;
+  episodes: Episode[];
+}
+
+export interface Episode {
+  id: number;
+  name: string;
+  number: number;
+  image: string | null;
+  runtime: string;
+  air_date: string | null;
+}
+
+export type Movie = {
   id: number;
   title: string;
   vote: number;
@@ -43,6 +75,7 @@ export interface MovieApiClient {
   getAllMovies(page: number): Promise<Pagination<Movie>>;
   getAllTv(page: number): Promise<Pagination<Tv>>;
   getMovieDetail(id: number): Promise<MovieDetail>;
+  getTvDetail(id: number): Promise<TvDetail>;
 }
 
 export type ExpressRouteFunc = (

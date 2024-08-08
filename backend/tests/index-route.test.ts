@@ -1,6 +1,5 @@
 import { createIndexHandler } from '../routes';
 import { MovieApiClient } from '../types';
-import { Response } from 'express';
 
 const fakeMovieApiClient: MovieApiClient = {
   getAllMovies: jest.fn((page: number) =>
@@ -20,6 +19,7 @@ const fakeMovieApiClient: MovieApiClient = {
   ),
   getMovieDetail: jest.fn(),
   getAllTv: jest.fn(),
+  getTvDetail: jest.fn(),
 };
 
 describe('indexRoute', () => {
