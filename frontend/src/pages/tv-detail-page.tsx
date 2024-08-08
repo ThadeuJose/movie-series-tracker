@@ -3,6 +3,8 @@ import { useLoaderData } from 'react-router-dom';
 import { HttpClient } from '../api-client';
 import { IconWatch } from '../icon-watch';
 import { calculateReleaseDateDiff } from '../calculate-date';
+import 'keen-slider/keen-slider.min.css';
+import { useKeenSlider } from 'keen-slider/react';
 
 export async function TvDetailPageLoader({ params }: any) {
   return { id: params.id };
@@ -96,11 +98,7 @@ export function TvDetailPage() {
           </div>
         </div>
 
-        <div className="flex">
-          {data.season.episodes.map((elem) => (
-            <Episode key={elem.id} {...elem} />
-          ))}
-        </div>
+        <Carousel episodes={data.season.episodes} />
       </div>
       <div className="font-bold text-xl mb-4">Cast</div>
       <div className="grid grid-cols-5 gap-4">
@@ -128,12 +126,12 @@ interface EpisodeProps {
 
 function Episode({ name, number, image, runtime, air_date }: EpisodeProps) {
   return (
-    <div className="w-[300px]">
+    <div className={`w-[300px]`}>
       <div className="flex flex-row font-semibold">
         <div className="truncate w-10/12">{name}</div>
         <div className="ml-auto ">{number}</div>
       </div>
-      <Image className="my-2" src={image} />
+      <Image className="my-2  w-[300px] h-[170px]" src={image} />
       <div className="flex flex-row">
         {air_date && (
           <div>{calculateReleaseDateDiff(air_date, new Date())}</div>
@@ -158,4 +156,27 @@ function Image({ className, src }: ImageProps) {
   if (src) {
     return <img className={className} src={src} />;
   }
+}
+
+interface CarouselProps {
+  episodes: Episode[];
+}
+
+function Carousel({ episodes }: CarouselProps) {
+  const [sliderRef, instanceRef] = useKeenSlider({
+    slides: {
+      perView: 'auto',
+      spacing: 15,
+    },
+  });
+
+  return (
+    <div ref={sliderRef} className="keen-slider">
+      {episodes.map((elem) => (
+        <div key={elem.id} className="min-w-[300px] keen-slider__slide">
+          <Episode {...elem} />
+        </div>
+      ))}
+    </div>
+  );
 }
