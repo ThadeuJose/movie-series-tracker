@@ -4,6 +4,7 @@ import { Grid } from '../components/grid';
 import { IconPlanToWatch } from '../icon-plan-to-watch';
 import { IconWatched } from '../icon-watched';
 import { Pagination } from '../components/pagination';
+import { Link } from 'react-router-dom';
 
 type Result = {
   page: number;
@@ -55,9 +56,9 @@ export function TvPage() {
         {data.results.map((item) => (
           <Grid.Card key={item.id}>
             <Grid.Poster {...item}>
-              {/* Link to */}
-              <Grid.Title {...item} />
-              {/* Link to */}
+              <Link to={`${item.id}/detail`}>
+                <Grid.Title {...item} />
+              </Link>
               <Grid.Header>
                 <Grid.Rating {...item} />
                 <Grid.IconsTray>
