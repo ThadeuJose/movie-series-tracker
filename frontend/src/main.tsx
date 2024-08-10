@@ -11,7 +11,7 @@ import {
   movieDetailPageLoader,
 } from './pages/movie-detail-page.tsx';
 import { TvPage } from './pages/tv-page.tsx';
-import { TvDetailPage, TvDetailPageLoader } from './pages/tv-detail-page.tsx';
+import { TvDetailPage, tvDetailPageLoader } from './pages/tv-detail-page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       {
         path: 'tv/:id/detail',
         element: <TvDetailPage />,
-        loader: TvDetailPageLoader,
+        loader: tvDetailPageLoader,
       },
     ],
   },

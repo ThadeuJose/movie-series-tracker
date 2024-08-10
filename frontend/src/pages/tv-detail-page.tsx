@@ -6,7 +6,8 @@ import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { usePageInfo } from '../usePageInfo';
 
-export async function TvDetailPageLoader({ params }: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function tvDetailPageLoader({ params }: any) {
   return { id: params.id };
 }
 

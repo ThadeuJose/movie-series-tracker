@@ -4,6 +4,7 @@ import { calculateReleaseDateDiff } from '../calculate-date';
 import { IconWatch } from '../icon-watch';
 import { usePageInfo } from '../usePageInfo';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function movieDetailPageLoader({ params }: any) {
   return { id: params.id };
 }
