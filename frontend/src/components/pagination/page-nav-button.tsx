@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface PageNavButtonProps {
   iconType: 'Previous' | 'Next';
   onClick: () => void;

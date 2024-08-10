@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HttpClient } from '../api-client';
 import { Grid } from '../components/grid';
 import { IconPlanToWatch } from '../icon-plan-to-watch';

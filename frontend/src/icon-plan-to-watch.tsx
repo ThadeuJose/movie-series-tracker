@@ -1,5 +1,4 @@
 import { BookmarkIcon } from '@heroicons/react/20/solid';
-import React from 'react';
 
 interface IconPlanToWatchProps {
   dataCy: string;

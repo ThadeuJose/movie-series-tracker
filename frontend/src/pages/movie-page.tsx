@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconPlanToWatch } from './../icon-plan-to-watch';
 import { HttpClient } from './../api-client';
 import { IconStar } from './../icon-star';

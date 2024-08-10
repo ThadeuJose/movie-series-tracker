@@ -1,5 +1,4 @@
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid';
-import React from 'react';
 
 interface IconPlanToWatchProps {
   index: number;

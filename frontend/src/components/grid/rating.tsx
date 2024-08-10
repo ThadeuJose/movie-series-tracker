@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { IconStar } from '../../icon-star';
 
 interface RootProps {
