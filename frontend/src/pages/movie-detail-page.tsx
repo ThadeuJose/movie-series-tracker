@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import { HttpClient } from '../api-client';
 import { calculateReleaseDateDiff } from '../calculate-date';
 import { IconWatch } from '../icon-watch';
+import { usePageInfo } from '../usePageInfo';
 
 export async function movieDetailPageLoader({ params }: any) {
   return { id: params.id };
@@ -27,7 +27,7 @@ export type Cast = {
 };
 
 export function MovieDetailPage() {
-  const { id } = useLoaderData();
+  const { id } = usePageInfo();
 
   const emptyData: MovieDetail = {
     id: 0,

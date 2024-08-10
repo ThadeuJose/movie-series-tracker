@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import { HttpClient } from '../api-client';
 import { IconWatch } from '../icon-watch';
 import { calculateReleaseDateDiff } from '../calculate-date';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { usePageInfo } from '../usePageInfo';
 
 export async function TvDetailPageLoader({ params }: any) {
   return { id: params.id };
@@ -50,7 +50,7 @@ export type Cast = {
 };
 
 export function TvDetailPage() {
-  const { id } = useLoaderData();
+  const { id } = usePageInfo();
 
   const [data, setData] = useState<TvDetail | null>(null);
   const api: HttpClient = new HttpClient();
