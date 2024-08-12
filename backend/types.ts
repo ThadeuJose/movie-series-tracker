@@ -42,7 +42,7 @@ export interface Episode {
   name: string;
   number: number;
   image: string | null;
-  runtime: string;
+  runtime: number;
   air_date: string | null;
 }
 
@@ -58,7 +58,7 @@ export type MovieDetail = {
   title: string;
   synopsis: string;
   image: string;
-  runtime: string;
+  runtime: number;
   vote: number;
   release_date: string;
   cast: Cast[];

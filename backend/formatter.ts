@@ -73,7 +73,7 @@ export class Formatter {
       name: data.name,
       number: data.episode_number,
       image: Formatter.formatImage(data.still_path),
-      runtime: Formatter.formatTime(data.runtime),
+      runtime: data.runtime,
       air_date: data.air_date,
     };
   }
@@ -84,7 +84,7 @@ export class Formatter {
       name: data.name,
       number: data.episode_number,
       image: Formatter.formatImage(data.still_path),
-      runtime: Formatter.formatTime(data.runtime),
+      runtime: data.runtime,
       air_date: data.air_date,
     };
   }
@@ -98,7 +98,7 @@ export class Formatter {
       name: data.name,
       number: data.episode_number,
       image: Formatter.formatImage(data.still_path),
-      runtime: Formatter.formatTime(data.runtime),
+      runtime: data.runtime,
       air_date: data.air_date,
     };
   }
@@ -118,7 +118,7 @@ export class Formatter {
       title: data.title,
       synopsis: data.overview,
       image: Formatter.formatPoster(data.poster_path),
-      runtime: Formatter.formatTime(data.runtime),
+      runtime: data.runtime,
       vote: Formatter.formatVote(data.vote_average),
       release_date: data.release_date,
       cast: Formatter.formatCast(data.credits.cast),
@@ -131,12 +131,6 @@ export class Formatter {
 
   static formatVote(value: number) {
     return parseFloat(value.toFixed(1));
-  }
-
-  static formatTime(value: number) {
-    const hour: number = Math.floor(value / 60);
-    const minute: number = value % 60;
-    return `${hour}h ${minute}m`;
   }
 
   static formatCast(cast: CastResult[]): Cast[] {

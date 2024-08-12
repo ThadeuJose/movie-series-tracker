@@ -9,6 +9,23 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
+
+import { mount, MountReturn } from 'cypress/react';
+
+// Optionally configure or add custom commands
+Cypress.Commands.add('mount', (component) => {
+  return mount(component);
+});
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      mount(component: React.ReactNode): Chainable<MountReturn>;
+    }
+  }
+}
+
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })

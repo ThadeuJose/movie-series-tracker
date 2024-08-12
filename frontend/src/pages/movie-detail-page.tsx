@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { HttpClient } from '../api-client';
 import { calculateReleaseDateDiff } from '../calculate-date';
-import { IconWatch } from '../icon-watch';
 import { usePageInfo } from '../usePageInfo';
+import { Runtime } from '../components/runtime';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function movieDetailPageLoader({ params }: any) {
@@ -14,7 +14,7 @@ export type MovieDetail = {
   title: string;
   synopsis: string;
   image: string;
-  runtime: string;
+  runtime: number;
   vote: number;
   release_date: string;
   cast: Cast[];
@@ -35,7 +35,7 @@ export function MovieDetailPage() {
     title: '',
     synopsis: '',
     image: '',
-    runtime: '',
+    runtime: 0,
     vote: 0,
     release_date: '',
     cast: [],
@@ -66,12 +66,9 @@ export function MovieDetailPage() {
             {data.vote}
           </div>
         </div>
-        <div className="flex flex-row items-center">
-          <div className="mr-1 flex items-baseline">
-            <IconWatch />
-          </div>
-          <div className="font-semibold mr-7">{data.runtime}</div>
-          <div className="px-4 bg-red-700 rounded-full font-bold text-white">
+        <div className="flex flex-row">
+          <Runtime runtime={data.runtime} />
+          <div className="px-4 bg-red-700 rounded-full font-bold text-white mr-auto ml-3">
             {calculateReleaseDateDiff(data.release_date, new Date())}
           </div>
         </div>

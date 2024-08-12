@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { HttpClient } from '../api-client';
-import { IconWatch } from '../icon-watch';
 import { calculateReleaseDateDiff } from '../calculate-date';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { usePageInfo } from '../usePageInfo';
+import { Runtime } from '../components/runtime';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function tvDetailPageLoader({ params }: any) {
@@ -39,7 +39,7 @@ export interface Episode {
   name: string;
   number: number;
   image: string | null;
-  runtime: string;
+  runtime: number;
   air_date: string | null;
 }
 
@@ -121,7 +121,7 @@ interface EpisodeProps {
   name: string;
   number: number;
   image: string | null;
-  runtime: string;
+  runtime: number;
   air_date: string | null;
 }
 
@@ -137,12 +137,7 @@ function Episode({ name, number, image, runtime, air_date }: EpisodeProps) {
         {air_date && (
           <div>{calculateReleaseDateDiff(air_date, new Date())}</div>
         )}
-        <div className="flex flex-row items-center ml-auto">
-          <div className="mr-1 flex items-baseline">
-            <IconWatch />
-          </div>
-          <div className="font-semibold">{runtime}</div>
-        </div>
+        <Runtime className="ml-auto" runtime={runtime} />
       </div>
     </div>
   );
