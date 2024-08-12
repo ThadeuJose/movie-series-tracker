@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { HttpClient } from '../api-client';
 import { Grid } from '../components/grid';
 import { IconPlanToWatch } from '../icon-plan-to-watch';
 import { IconWatched } from '../icon-watched';
 import { Pagination } from '../components/pagination';
 import { Link } from 'react-router-dom';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 type Result = {
   page: number;
@@ -20,40 +21,40 @@ interface Tv {
 }
 
 export function TvPage() {
-  const emptyData = {
-    page: 0,
-    results: [],
-    total_pages: 0,
-  };
-  const [data, setData] = useState<Result>(emptyData);
   const api: HttpClient = new HttpClient();
 
-  const getPage = (page: number) => api.get<Result>(`/tv?page=${page}`);
+  function getTvPage(page: number): Promise<Result> {
+    return api.get<Result>(`/tv?page=${page}`);
+  }
 
-  useEffect(() => {
-    getPage(1).then((response) => {
-      setData(response);
+  const [page, setPage] = useState<number>(1);
+
+  const { data, isLoading, isFetching, isError, error, isPlaceholderData } =
+    useQuery({
+      queryKey: ['tv', page],
+      queryFn: () => getTvPage(page),
+      placeholderData: keepPreviousData,
     });
-  }, []);
 
   function nextPage() {
-    getPage(data.page + 1).then((response) => {
-      setData(response);
-    });
+    const total_pages = data?.total_pages ?? 0;
+    if (!isPlaceholderData && page + 1 < total_pages) {
+      setPage((old) => old + 1);
+    }
   }
 
   function previousPage() {
-    getPage(data.page - 1).then((response) => {
-      setData(response);
-    });
+    setPage((old) => Math.max(old - 1, 1));
   }
 
-  if (data.page === 0) return 'Cant Render';
+  if (isError) throw error;
+
+  if (isLoading || isFetching) return 'Loading';
 
   return (
     <>
       <Grid.Root>
-        {data.results.map((item) => (
+        {data?.results.map((item) => (
           <Grid.Card key={item.id}>
             <Grid.Poster {...item}>
               <Link to={`${item.id}/detail`}>
@@ -80,7 +81,7 @@ export function TvPage() {
       </Grid.Root>
       <Pagination.Root>
         <Pagination.PageNavButton iconType="Previous" onClick={previousPage} />
-        <Pagination.PageNumber page={data.page} />
+        <Pagination.PageNumber page={data?.page ?? 0} />
         <Pagination.PageNavButton iconType="Next" onClick={nextPage} />
       </Pagination.Root>
     </>
