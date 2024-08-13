@@ -29,8 +29,12 @@ export function MoviesPage() {
   const [dataWatched, setDataWatched] = useState<number[]>([]);
   const api: HttpClient = new HttpClient();
 
+  function getMoviePage(page: number): Promise<Result> {
+    return api.get<Result>(`/movie?page=${page}`);
+  }
+
   useEffect(() => {
-    api.get<Result>('1').then((response) => {
+    getMoviePage(1).then((response) => {
       setData(response);
     });
   }, []);
@@ -140,7 +144,7 @@ export function MoviesPage() {
           data-cy={`IconPreviousPage`}
           className={paginationIconsClass + ' border-r border-black'}
           onClick={() => {
-            api.get<Result>(String(data.page - 1)).then((response) => {
+            getMoviePage(data.page - 1).then((response) => {
               setData(response);
             });
           }}
@@ -154,7 +158,7 @@ export function MoviesPage() {
           data-cy={`IconNextPage`}
           className={paginationIconsClass + ' border-l border-black'}
           onClick={() => {
-            api.get<Result>(String(data.page + 1)).then((response) => {
+            getMoviePage(data.page + 1).then((response) => {
               setData(response);
             });
           }}

@@ -45,7 +45,7 @@ export function MovieDetailPage() {
   const api: HttpClient = new HttpClient();
 
   useEffect(() => {
-    api.get<MovieDetail>(`${id}/detail`).then((response) => {
+    api.get<MovieDetail>(`movie/${id}/detail`).then((response) => {
       setData(response);
     });
   }, []);

@@ -6,6 +6,7 @@ import cors from 'cors';
 import { indexRouter } from './index/index-routes';
 import userRouter from './user/user';
 import { seriesRouter } from './series/series-routes';
+import { movieRouter } from './movie/movie-routes';
 
 export const app: Express = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use('/movie', movieRouter);
 app.use('/tv', seriesRouter);
 app.use('/user', userRouter);
 app.use('/', indexRouter);
