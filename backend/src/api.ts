@@ -14,7 +14,7 @@ import {
   SeasonResult,
   TvDetailResult,
   TvDiscoverResult,
-} from './themoviedb-api-types';
+} from './external-api/themoviedb-api-types';
 import { Formatter } from './formatter';
 
 export class TheMovieDBApiClient implements MovieApiClient {

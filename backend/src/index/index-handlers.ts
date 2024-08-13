@@ -1,6 +1,6 @@
-import { Request, Response, Router } from 'express';
-import { ExpressRouteFunc, MovieApiClient } from '../types';
+import { Request, Response } from 'express';
 import { getMovieApiClient } from '../service-injection';
+import { MovieApiClient, ExpressRouteFunc } from '../types';
 
 export function createIndexHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
@@ -11,7 +11,7 @@ export function createIndexHandler(
   };
 }
 
-function createMovieDetailHandler(
+export function createMovieDetailHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
 ): ExpressRouteFunc {
   return async function (req: Request, res: Response) {
@@ -19,8 +19,3 @@ function createMovieDetailHandler(
     apiClient.getMovieDetail(Number(id)).then((response) => res.send(response));
   };
 }
-
-export const indexRouter: Router = Router();
-
-indexRouter.get('/:page', createIndexHandler());
-indexRouter.get('/:id/detail', createMovieDetailHandler());

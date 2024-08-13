@@ -1,8 +1,8 @@
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import { ExpressRouteFunc, MovieApiClient } from '../types';
 import { getMovieApiClient } from '../service-injection';
 
-function createIndexHandler(
+export function createSeriesIndexHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
 ): ExpressRouteFunc {
   return async function (req: Request, res: Response) {
@@ -11,7 +11,7 @@ function createIndexHandler(
   };
 }
 
-function createMovieDetailHandler(
+export function createSeriesDetailHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
 ): ExpressRouteFunc {
   return async function (req: Request, res: Response) {
@@ -19,8 +19,3 @@ function createMovieDetailHandler(
     apiClient.getTvDetail(Number(id)).then((response) => res.send(response));
   };
 }
-
-export const tvRouter: Router = Router();
-
-tvRouter.get('/', createIndexHandler());
-tvRouter.get('/:id/detail', createMovieDetailHandler());

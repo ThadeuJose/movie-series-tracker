@@ -3,9 +3,9 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import { indexRouter } from './routes/index';
-import userRouter from './routes/user';
-import { tvRouter } from './routes/tv';
+import { indexRouter } from './index/index-routes';
+import userRouter from './user/user';
+import { seriesRouter } from './series/series-routes';
 
 export const app: Express = express();
 
@@ -15,6 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/tv', tvRouter);
+app.use('/tv', seriesRouter);
 app.use('/user', userRouter);
 app.use('/', indexRouter);

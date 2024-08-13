@@ -7,7 +7,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "nodemon --exec node -r ts-node/register --env-file=.env server.ts",
+    "dev": "nodemon --exec node -r ts-node/register --env-file=.env ./src/server.ts",
     "test": "jest"
   },
   "dependencies": {

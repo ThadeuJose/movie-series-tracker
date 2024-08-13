@@ -1,5 +1,5 @@
 import { createIndexHandler } from '../routes';
-import { MovieApiClient } from '../types';
+import { MovieApiClient } from '../src/types';
 
 const fakeMovieApiClient: MovieApiClient = {
   getAllMovies: jest.fn((page: number) =>

@@ -16,7 +16,7 @@ import {
   Episode,
   TvDetailResult,
   LastEpisodeToAir,
-} from './themoviedb-api-types';
+} from './external-api/themoviedb-api-types';
 
 export class Formatter {
   static formatResult<T, K>(

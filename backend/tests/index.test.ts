@@ -21,7 +21,7 @@ const fakeMovieApiClient: MovieApiClient = {
 
 import request from 'supertest';
 import { app } from '../app';
-import { MovieApiClient } from '../types';
+import { MovieApiClient } from '../src/types';
 
 jest.mock('../service-injection', () => ({
   getMovieApiClient: () => fakeMovieApiClient,
