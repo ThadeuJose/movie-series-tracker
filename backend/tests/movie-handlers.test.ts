@@ -1,7 +1,8 @@
-import { createIndexHandler } from '../routes';
+import { createMovieIndexHandler } from '../src/movie/movie-handlers';
 import { MovieApiClient } from '../src/types';
 
 const fakeMovieApiClient: MovieApiClient = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAllMovies: jest.fn((page: number) =>
     Promise.resolve({
       page: 1,
@@ -22,18 +23,20 @@ const fakeMovieApiClient: MovieApiClient = {
   getTvDetail: jest.fn(),
 };
 
-describe('indexRoute', () => {
+describe('Movie Handler', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockRequest: any = {
-    params: {
+    query: {
       page: 1,
     },
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockResponse: any = {
     send: jest.fn(),
   };
   describe('when made a request', () => {
     beforeEach(() => {
-      const route = createIndexHandler(fakeMovieApiClient);
+      const route = createMovieIndexHandler(fakeMovieApiClient);
       route(mockRequest, mockResponse);
     });
 

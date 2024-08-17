@@ -1,4 +1,5 @@
 const fakeMovieApiClient: MovieApiClient = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAllMovies: jest.fn((number) =>
     Promise.resolve({
       page: 1,
@@ -20,18 +21,16 @@ const fakeMovieApiClient: MovieApiClient = {
 };
 
 import request from 'supertest';
-import { app } from '../app';
+import { app } from '../src/app';
 import { MovieApiClient } from '../src/types';
 
-jest.mock('../service-injection', () => ({
+jest.mock('../src/service-injection', () => ({
   getMovieApiClient: () => fakeMovieApiClient,
 }));
 
-describe('Index', () => {
-  test('should return all items', async () => {
-    const response = await request(app).get('/1');
-
-    expect(response.status).toEqual(200);
+describe('Movie', () => {
+  test('should return all movies', async () => {
+    const response = await request(app).get('/movie?page=1').expect(200);
 
     expect(response.body.results[0].title).toEqual('Movie 1');
     expect(response.body.results[0].image).toEqual(

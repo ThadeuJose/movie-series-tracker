@@ -1,13 +1,24 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getMovieApiClient } from '../service-injection';
 import { MovieApiClient, ExpressRouteFunc } from '../types';
 
 export function createMovieIndexHandler(
   apiClient: MovieApiClient = getMovieApiClient(),
 ): ExpressRouteFunc {
-  return async function (req: Request, res: Response) {
+  return async function (
+    req: Request,
+    res: Response,
+    next: NextFunction | undefined,
+  ) {
     const { page } = req.query;
-    apiClient.getAllMovies(Number(page)).then((response) => res.send(response));
+    apiClient
+      .getAllMovies(Number(page))
+      .then((response) => res.send(response))
+      .catch((error) => {
+        if (next) {
+          next(error);
+        }
+      });
   };
 }
 
